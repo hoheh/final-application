@@ -25,9 +25,8 @@ const Register = () => {
           </label>
           <input
             id="mail"
-            // TODO поменять цвет ринга
             placeholder="your_mail@example.com"
-            className="mt-0.5 w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="text"
           />
         </div>
@@ -38,8 +37,7 @@ const Register = () => {
           <input
             id="name_surname"
             placeholder="Иванов Игорь Дмитриевич"
-            // TODO поменять цвет ринга
-            className="mt-0.5 w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="text"
           />
         </div>
@@ -49,8 +47,7 @@ const Register = () => {
           </label>
           <input
             id="pass"
-            // TODO поменять цвет ринга
-            className="mt-0.5 w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="password"
           />
         </div>
@@ -60,15 +57,14 @@ const Register = () => {
           </label>
           <input
             id="repeat_pass"
-            // TODO поменять цвет ринга
-            className="mt-0.5 w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="password"
           />
         </div>
       </div>
       <div>
         <div className="mt-8">
-          <button className="w-full rounded-md text-lg text-white py-3 focus:outline-none bg-green-500 focus:ring ring-green-500 focus:ring-offset-2">
+          <button className="w-full rounded-md text-lg text-white py-3 focus:outline-none bg-dirty-green focus:ring ring-dirty-green focus:ring-offset-2">
             Зарегистрироваться
           </button>
         </div>

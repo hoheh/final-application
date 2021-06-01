@@ -5,10 +5,6 @@ import WhiteBlock from "../components/WhiteBlock";
 
 import plus from "../assets/images/krest.svg";
 
-// TODO мб стоит объединить Auth и Register в один компонент [.]
-
-// TODO поменять цвет ринга у инпутов [.]
-
 // TODO перенести из старого проекта компоненты и стили [.]
 
 // TODO объединить компонент AUTH and REGISTER ->
@@ -17,6 +13,8 @@ import plus from "../assets/images/krest.svg";
 // TODO валидация гмыла и пароля с помощью регулярок [.]
 
 // TODO подключить firebase и добавить авторизацию через GOOGLE [.]
+
+// TODO мб переделать на форму (добавить Formik для лучшей рыботы с формами) [.]
 
 const Auth = () => {
   const history = useHistory();
@@ -39,7 +37,7 @@ const Auth = () => {
           <input
             id="mail"
             placeholder="your_mail@example.com"
-            className="w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="text"
           />
         </div>
@@ -49,14 +47,14 @@ const Auth = () => {
           </label>
           <input
             id="pass"
-            className="w-full focus:ring border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
+            className="mt-0.5 w-full focus:ring ring-dirty-green ring-opacity-50 border rounded-md font-thin border-gray-300 focus:outline-none px-2 py-2.5"
             type="password"
           />
         </div>
       </div>
       <div>
         <div className="mt-8">
-          <button className="w-full rounded-md text-lg text-white py-3 focus:outline-none bg-green-500 focus:ring ring-green-500 focus:ring-offset-2">
+          <button className="w-full rounded-md text-lg text-white py-3 focus:outline-none bg-dirty-green focus:ring ring-dirty-green focus:ring-offset-2">
             Войти в учетную запись
           </button>
         </div>
