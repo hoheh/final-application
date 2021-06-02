@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 const WhiteBlock = ({ children, classname }) => {
   return (
-    <div className={clsx("px-7 py-6 rounded-xl bg-white", classname)}>
+    <div className={clsx("px-9 py-6 rounded-xl bg-white", classname)}>
       {children}
     </div>
   );
