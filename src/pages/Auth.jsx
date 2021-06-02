@@ -1,30 +1,51 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+
 import { useFormik } from "formik";
 import clsx from "clsx";
+import firebase from "firebase";
 
-import WhiteBlock from "../components/WhiteBlock";
-import { validateMail } from "../utils/validation";
+import { WhiteBlock } from "../components/main";
 
-import plus from "../assets/images/krest.svg";
+import { validateAuth } from "../utils/validation";
+import { Context } from "../index";
 
-// TODO (5) перенести из старого проекта компоненты и стили [.]
+import { krest } from "../assets/images/main";
 
-// TODO (1) валидация гмыла и пароля с помощью регулярок [x] -> сделать тоже самое но с Auth
+// TODO переверстать формы регистрации и авторизации ибо шрифт стал меньше
 
-// TODO (4) подключить firebase и добавить авторизацию через GOOGLE [.]
+// TODO переделать отображение форм тк это новая страница и задний план просто удаляется
 
-// TODO (3?) мб переделать на форму (добавить Formik для лучшей рaботы с формами) [x] -> сделать тоже самое но с Auth
+// TODO сделать бд в firebase
+
+// TODO переход при регистрации/авторизации на главную страницу
+
+// TODO регистрацию с помощью почты и пароля
+
+// TODO отображение авы (google ава/ава из первых букв имени-фамилии c каким нибудь цветом на беке)
+
+// TODO отдельный компонент input и кнопки
+
+// TODO мб сделать изображения на странице книг button
 
 const Auth = () => {
   const history = useHistory();
+
+  let { auth } = React.useContext(Context);
+  const authGoogle = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const user = await auth.signInWithPopup(provider);
+    console.log(user);
+  };
+
+  console.log(auth);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validate: validateMail,
+    validate: validateAuth,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -36,7 +57,7 @@ const Auth = () => {
         <img
           onClick={() => history.goBack()}
           className="w-7 h-7"
-          src={plus}
+          src={krest}
           alt=""
         />
       </div>
@@ -103,7 +124,9 @@ const Auth = () => {
       </form>
       <div className="mt-3">
         <div>
-          <button className="w-full rounded-md border focus:ring-2 ring-gray-400 focus:ring-offset-2 border-gray-400 text-gray-400 py-2 focus:outline-none">
+          <button
+            onClick={() => authGoogle()}
+            className="w-full rounded-md border focus:ring-2 ring-gray-400 focus:ring-offset-2 border-gray-400 text-gray-400 py-2 focus:outline-none">
             Войти с помощью Google
           </button>
         </div>

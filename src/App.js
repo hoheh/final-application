@@ -2,23 +2,24 @@ import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
 
 import { Main, Register, Auth } from "./pages/main";
-import { Modal } from "./components/main";
+import { Modal, Header } from "./components/main";
 
 function App() {
   const links = [
     {
       name: "Вход",
-      path: "/auth",
+      path: "auth",
     },
     {
       name: "Регистрация",
-      path: "/register",
+      path: "register",
     },
   ];
 
   return (
     <div className="z-0 w-full h-screen">
       <header>
+        <Header />
         <ul className="flex p-3 space-x-2">
           <Link to="/">
             <li>Main</li>
