@@ -38,6 +38,7 @@ module.exports = {
       spacing: {
         76: "19rem",
         92: "23rem",
+        120: "30rem",
         104: "26rem",
         140: "35rem",
         152: "38rem",
