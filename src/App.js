@@ -1,21 +1,10 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import { Book, Register, Auth } from "./pages/main";
 import { Modal, Header } from "./components/main";
 
 function App() {
-  const links = [
-    {
-      name: "Вход",
-      path: "auth",
-    },
-    {
-      name: "Регистрация",
-      path: "register",
-    },
-  ];
-
   return (
     <div className="z-0 w-full h-screen">
       <header></header>

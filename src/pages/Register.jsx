@@ -3,11 +3,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 
 import { WhiteBlock, Button, InputField } from "../components/main";
+import { Context } from "../index";
 
 import { validateReg } from "../utils/validation";
 
 import plus from "../assets/images/krest.svg";
-import { Context } from "../index";
 
 const Register = () => {
   const { auth } = React.useContext(Context);

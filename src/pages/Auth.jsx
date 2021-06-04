@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import firebase from "firebase";
 
 import { Button, InputField, WhiteBlock } from "../components/main";
 
@@ -24,7 +23,7 @@ import { krest } from "../assets/images/main";
 
 const Auth = () => {
   const history = useHistory();
-  const { auth } = React.useContext(Context);
+  const { auth, firebase } = React.useContext(Context);
 
   const authGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
