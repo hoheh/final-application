@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
 
-import { Main, Register, Auth } from "./pages/main";
+import { Book, Register, Auth } from "./pages/main";
 import { Modal, Header } from "./components/main";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Header />
-            <Main />
+            <Book />
           </Route>
           <Route exact path="/auth">
             <Modal>

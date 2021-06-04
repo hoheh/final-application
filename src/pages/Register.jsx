@@ -1,16 +1,16 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import firebase from "firebase";
 import { useFormik } from "formik";
 
-import { WhiteBlock } from "../components/main";
-import { InputField } from "../components/main";
+import { WhiteBlock, Button, InputField } from "../components/main";
 
 import { validateReg } from "../utils/validation";
 
 import plus from "../assets/images/krest.svg";
+import { Context } from "../index";
 
 const Register = () => {
+  const { auth } = React.useContext(Context);
   const history = useHistory();
 
   const formik = useFormik({
@@ -23,14 +23,14 @@ const Register = () => {
     validate: validateReg,
     onSubmit: (values) => {
       console.log(values.password, values.email);
-      firebase
-        .auth()
+      auth
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((data) => {
+          history.push("/");
           console.log(data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.message);
         });
     },
   });
@@ -60,7 +60,7 @@ const Register = () => {
     <WhiteBlock classname="w-104 flex justify-center flex-col">
       <div className="flex flex-row-reverse cursor-pointer">
         <img
-          onClick={() => history.goBack()}
+          onClick={() => history.push("/")}
           className="w-8 h-8"
           src={plus}
           alt=""
@@ -71,9 +71,10 @@ const Register = () => {
       </div>
       <form onSubmit={formik.handleSubmit} className="space-y-8">
         <div className="space-y-3">
-          {inputField.map(({ label, nameId, placeholder, type }) => {
+          {inputField.map(({ label, nameId, placeholder, type }, idx) => {
             return (
               <InputField
+                key={idx}
                 label={label}
                 nameId={nameId}
                 placeholder={placeholder}
@@ -84,11 +85,11 @@ const Register = () => {
           })}
         </div>
         <div className="mt-8">
-          <button
+          <Button
+            text="Зарегистрироваться"
             type="submit"
-            className="w-full rounded-md text-xl text-white py-3.5 focus:outline-none bg-dirty-green focus:ring ring-dirty-green focus:ring-offset-2">
-            Зарегистрироваться
-          </button>
+            classnames="text-white bg-dirty-green ring-dirty-green focus:ring-offset-2 py-3.5"
+          />
         </div>
       </form>
       <div>

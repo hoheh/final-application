@@ -35,10 +35,6 @@ export const validateReg = (values) => {
     errors.password = "Пароль введен неверно";
   }
 
-  if (!values.name_surname) {
-    errors.name_surname = "Поле обязательно для заполнения";
-  }
-
   if (!values.repeat_password) {
     errors.repeat_password = "Поле обязательно для заполнения";
   } else if (values.repeat_password !== values.password) {

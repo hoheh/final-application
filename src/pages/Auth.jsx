@@ -1,32 +1,31 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-
 import { useFormik } from "formik";
 import firebase from "firebase";
 
-import { InputField, WhiteBlock } from "../components/main";
+import { Button, InputField, WhiteBlock } from "../components/main";
 
 import { validateAuth } from "../utils/validation";
 import { Context } from "../index";
 
 import { krest } from "../assets/images/main";
 
-// TODO (4) сделать бд в firebases
+// TODO (1) сделать бд в firebases
 
-// TODO (3) переход при регистрации/авторизации на главную страницу
+// TODO (2) отображение авы (google ава/ава из первых букв имени-фамилии c каким нибудь цветом на беке)
 
-// TODO (2) регистрацию и авторизация с помощью почты и пароля
+// TODO (3) роутинг по коллекциям
 
-// TODO (5) отображение авы (google ава/ава из первых букв имени-фамилии c каким нибудь цветом на беке)
+// TODO (4) получение данных из бд
 
-// TODO (7) отдельный компонент кнопки
+// TODO (5) переход на страницу книги
 
-// TODO (6) мб сделать изображения на странице книг button
+// TODO (6) переход на страницу корзины
 
 const Auth = () => {
   const history = useHistory();
+  const { auth } = React.useContext(Context);
 
-  let { auth } = React.useContext(Context);
   const authGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     const user = await auth.signInWithPopup(provider);
@@ -40,7 +39,9 @@ const Auth = () => {
     },
     validate: validateAuth,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      auth.signInWithEmailAndPassword(values.email, values.password).then((data) => {
+        history.push("/");
+      });
     },
   });
 
@@ -63,7 +64,7 @@ const Auth = () => {
     <WhiteBlock classname="w-104 flex justify-center flex-col">
       <div className="flex flex-row-reverse cursor-pointer">
         <img
-          onClick={() => history.goBack()}
+          onClick={() => history.push("/")}
           className="w-8 h-8"
           src={krest}
           alt=""
@@ -74,9 +75,10 @@ const Auth = () => {
       </div>
       <form onSubmit={formik.handleSubmit} className="space-y-8">
         <div className="space-y-4">
-          {inputField.map(({ label, name, placeholder, type }) => {
+          {inputField.map(({ label, name, placeholder, type }, idx) => {
             return (
               <InputField
+                key={idx}
                 label={label}
                 nameId={name}
                 placeholder={placeholder}
@@ -87,20 +89,20 @@ const Auth = () => {
           })}
         </div>
         <div>
-          <button
+          <Button
             type="submit"
-            className="w-full rounded-md text-xl text-white py-3.5 focus:outline-none bg-dirty-green focus:ring-2 ring-dirty-green focus:ring-offset-2">
-            Войти в учетную запись
-          </button>
+            text="Войти в учетную запись"
+            classnames="text-white py-3.5 bg-dirty-green ring-dirty-green focus:ring-offset-2"
+          />
         </div>
       </form>
       <div className="mt-3">
         <div>
-          <button
+          <Button
+            text="Войти с помощью Google"
             onClick={() => authGoogle()}
-            className="w-full rounded-md text-xl border focus:ring-2 ring-gray-400 focus:ring-offset-2 border-gray-400 text-gray-400 py-3 focus:outline-none">
-            Войти с помощью Google
-          </button>
+            classnames="border ring-gray-400 border-gray-400 text-gray-400 py-2.5 focus:ring-offset-2 focus:ring-2"
+          />
         </div>
         <div className="flex justify-center items-center mt-1">
           <p className="text-md">

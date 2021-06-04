@@ -15,34 +15,27 @@ const Book = () => {
   const inStock = 10;
   const sum = 821;
   const [bookMarkChoose, setBookMarkChoose] = React.useState(false);
-  const addBorder = (target) => {
-    target["parentNode"].classList.add("ring-2", "ring-dirty-green");
-  };
+  const [countBook, setCountBook] = React.useState(1);
 
   return (
     <div className="py-10">
       <div className="space-y-5">
         <div className="px-20 flex space-x-8">
-          <div className="p-1 space-y-6">
-            <div
-              // TODO переписать логику переключения на useReducer
-              onClick={({ target }) => addBorder(target)}
-              className="w-20 h-20 overflow-hidden object-center">
+          <div className="p-1 flex flex-col space-y-6">
+            <button className="w-20 focus:outline-none focus:ring-2 focus:ring-dirty-green h-20 overflow-hidden object-center">
               <img
                 className="object-cover cursor-pointer"
                 src={bigBookImage}
                 alt=""
               />
-            </div>
-            <div
-              onClick={({ target }) => addBorder(target)}
-              className="w-20 h-20 overflow-hidden object-center">
+            </button>
+            <button className="w-20 focus:outline-none focus:ring-2 focus:ring-dirty-green h-20 overflow-hidden object-center">
               <img
                 className="object-cover cursor-pointer"
                 src={secondBigImage}
                 alt=""
               />
-            </div>
+            </button>
           </div>
           <div>
             <img className="w-96" src={bigBookImage} alt="Big book image" />
@@ -84,7 +77,8 @@ const Book = () => {
                         <input
                           className="w-full h-full text-center focus:outline-none border-r
 												border-gray-300"
-                          value="1"
+                          onChange={({ target }) => setCountBook(target.value)}
+                          value={countBook}
                           type="text"
                         />
                       </div>
@@ -101,7 +95,6 @@ const Book = () => {
                     </div>
                   </div>
                   <div className="flex-1">
-                    {/* TODO мб чтото добавить нужно */}
                     <div className="flex space-x-1.5 justify-end">
                       <img className="w-7 h-7" src={starIcon} alt="" />
                       <span className="text-2xl text-gray-400 font-medium">5.0</span>
