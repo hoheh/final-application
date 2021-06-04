@@ -37,8 +37,6 @@ export const validateReg = (values) => {
 
   if (!values.name_surname) {
     errors.name_surname = "Поле обязательно для заполнения";
-  } else if (/^[а-яА-ЯёЁ0-9]/u.test(values.name_surname)) {
-    errors.name_surname = "Имя может содержать только буквы русского алфавита";
   }
 
   if (!values.repeat_password) {

@@ -11,9 +11,7 @@ import { Context } from "../index";
 
 import { krest } from "../assets/images/main";
 
-// TODO (1) переделать отображение форм тк это новая страница и задний план просто удаляется
-
-// TODO (4) сделать бд в firebase
+// TODO (4) сделать бд в firebases
 
 // TODO (3) переход при регистрации/авторизации на главную страницу
 

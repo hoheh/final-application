@@ -18,22 +18,11 @@ function App() {
 
   return (
     <div className="z-0 w-full h-screen">
-      <header>
-        <Header />
-        <ul className="flex p-3 space-x-2">
-          <Link to="/">
-            <li>Main</li>
-          </Link>
-          {links.map(({ name, path }, idx) => (
-            <Link to={path} key={idx}>
-              <li className="cursor-pointer">{name}</li>
-            </Link>
-          ))}
-        </ul>
-      </header>
+      <header></header>
       <main>
         <Switch>
           <Route exact path="/">
+            <Header />
             <Main />
           </Route>
           <Route exact path="/auth">

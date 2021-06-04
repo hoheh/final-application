@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-
+import firebase from "firebase";
 import { useFormik } from "formik";
 
 import { WhiteBlock } from "../components/main";
@@ -22,7 +22,16 @@ const Register = () => {
     },
     validate: validateReg,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(values.password, values.email);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
 
@@ -32,12 +41,6 @@ const Register = () => {
       nameId: "email",
       placeholder: "your_mail@example.com",
       type: "email",
-    },
-    {
-      label: "ФИО",
-      nameId: "name_surname",
-      placeholder: "Иванов Игорь Дмитриевич",
-      type: "text",
     },
     {
       label: "Введите пароль",

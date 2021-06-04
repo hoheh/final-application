@@ -1,17 +1,19 @@
-import { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 import { logo, search, menu, arrow } from "../assets/images/main";
 
 function Header() {
-  const [cartItem, setCartItem] = useState(0);
+  const [isAuth, setIsAuth] = React.useState(true);
+  const [cartItem, setCartItem] = React.useState(0);
   const items = ["Новинки", "Бестселлеры", "Лучшие цены", "Рекомендации", "Авторы"];
 
   return (
     <header className="border-b-2 py-2 px-20">
       <div className="flex justify-between items-center">
-        <div className="w-20 h-20 flex-none">
+        <Link to="/" className="w-20 h-20 flex-none">
           <img className="h-16" src={logo} alt="Logo svg" />
-        </div>
+        </Link>
         <div className="flex items-center flex-grow border-2 ml-20 mr-16 h-14 rounded-md">
           <div id="search-icon" className="w-16 flex justify-center items-center">
             <img className="w-6 h-6 opacity-50" src={search} alt="Search icon" />
@@ -30,22 +32,34 @@ function Header() {
             <button className="text-xl focus:outline-none font-medium">Найти</button>
           </div>
         </div>
-        <div className="flex w-56 space-x-6 justify-around items-center">
-          <div>
-            <p className="cursor-pointer flex items-center font-medium text-lg text-gray-500">
-              Мой профиль
-              <span className="ml-1">
-                <img
-                  className="w-4 h-2 relative top-0.5"
-                  src={arrow}
-                  alt="Arrow down"
-                />
-              </span>
-            </p>
-          </div>
+        <div className="flex p-3 w-72 justify-around items-center">
+          {isAuth ? (
+            <div className="flex items-center space-x-1">
+              <Link to="/auth">
+                <p className="text-lg font-medium text-link">Вход</p>
+              </Link>
+              <p className="text-lg opacity-50">/</p>
+              <Link to="/register">
+                <p className="text-lg font-medium text-link">Регистрация</p>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <p className="cursor-pointer flex items-center font-medium text-lg text-gray-500">
+                Мой профиль
+                <span className="ml-1">
+                  <img
+                    className="w-4 h-2 relative top-0.5"
+                    src={arrow}
+                    alt="Arrow down"
+                  />
+                </span>
+              </p>
+            </div>
+          )}
           <div className="cursor-pointer">
             <svg
-              className="relative fill-current text-gray-400 cursor-pointer w-10 transition ease-in
+              className="relative fill-current text-gray-400 cursor-pointer w-9 transition ease-in
             duration-300 hover:text-gray-500"
               viewBox="0 -31 512.00033 512"
               xmlns="http://www.w3.org/2000/svg">
