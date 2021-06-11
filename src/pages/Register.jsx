@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 
-import { WhiteBlock, Button, InputField } from "../components/main";
+import { WhiteBlock, Button, InputField } from "../components";
 import { Context } from "../index";
 
 import { validateReg } from "../utils/validation";

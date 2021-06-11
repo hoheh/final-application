@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 
-import { Button, InputField, WhiteBlock } from "../components/main";
+import { Button, InputField, WhiteBlock } from "../components";
 
 import { validateAuth } from "../utils/validation";
 import { Context } from "../index";
@@ -38,7 +38,7 @@ const Auth = () => {
     },
     validate: validateAuth,
     onSubmit: (values) => {
-      auth.signInWithEmailAndPassword(values.email, values.password).then((data) => {
+      auth.signInWithEmailAndPassword(values.email, values.password).then(() => {
         history.push("/");
       });
     },
