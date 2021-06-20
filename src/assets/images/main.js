@@ -10,3 +10,4 @@ export { default as secondBigImage } from "./cover4__w337.webp";
 export { default as checkImage } from "./check.svg";
 export { default as starIcon } from "./star.svg";
 export { default as krest } from "./krest.svg";
+export { default as trash } from "./trash.svg";

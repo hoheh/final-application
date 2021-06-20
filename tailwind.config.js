@@ -11,6 +11,7 @@ module.exports = {
       lg: "1.125rem",
       xl: "1.25rem",
       "2xl": "1.5rem",
+      "2.5xl": "1.8rem",
       "3xl": "1.875rem",
       "4xl": "2.25rem",
       "5xl": "3rem",
@@ -28,6 +29,7 @@ module.exports = {
         "hover-dirty-green": "#3eb8a9",
         "hover-dirty-green-50": "rgba(62, 184, 169, 0.07)",
         "gray-10": "#f7f7f7",
+        "blue-dirty": "#3D70B2",
       },
       fontSize: {
         "pre-xl": ["1.12rem", "1.75rem"],

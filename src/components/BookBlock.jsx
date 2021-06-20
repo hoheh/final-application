@@ -10,7 +10,7 @@ const BookBlock = React.memo(({ value }) => {
 
   return (
     <div className="w-full h-140 cursor-pointer flex items-center justify-center bg-transparent">
-      <div className="my-auto space-y-3">
+      <div className="my-auto w-full space-y-3">
         <div className="w-10/12 mx-auto">
           <img src={bookImage} alt="Book image" />
         </div>
