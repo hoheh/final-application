@@ -51,7 +51,7 @@ function Main() {
           <div>
             <div className="grid grid-cols-6 grid-rows-1">
               {items.map((value) => {
-                return value.category.categoryName === "Новинки" ? (
+                return value.categoryName === "Новинки" ? (
                   <BookBlock value={value} key={value.bookId} />
                 ) : null;
               })}
@@ -68,7 +68,7 @@ function Main() {
             <div className="grid grid-cols-6 grid-rows-1">
               {items.map((value) => {
                 return (
-                  value.category.categoryName === "Бестселлеры" && (
+                  value.categoryName === "Бестселлеры" && (
                     <BookBlock value={value} key={value.bookId} />
                   )
                 );

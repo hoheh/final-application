@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "firebase";
 
-import { BookBlock } from "../components";
+import { BookBlock, Category } from "../components";
 
 import { arrow } from "../assets/images/main";
 
@@ -9,7 +9,10 @@ const NewItems = () => {
   const sortByFiled = React.useRef(null);
   const [visibilityPopup, setVisibilityPopup] = React.useState(false);
   const [items, setItems] = React.useState([]);
-  const refs = firebase.firestore().collection("Book").where("category");
+  const refs = firebase
+    .firestore()
+    .collection("Book")
+    .where("categoryName", "==", "Новинки");
 
   const getItems = () => {
     refs.onSnapshot((qSnap) => {
@@ -18,7 +21,6 @@ const NewItems = () => {
         items.push(item.data());
       });
       setItems(items);
-      console.log(items);
     });
   };
 
@@ -42,32 +44,10 @@ const NewItems = () => {
           <span className="tracking-wider font-medium text-lg leading-7">
             Категории
           </span>
-          <ul className="space-y-3 relative left-0.5">
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Художественная литература
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Научно-популярная литература
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Хобби и досуг
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Детские книги
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Учебная литература
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Религия
-            </li>
-            <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-              Книги с автографом
-            </li>
-          </ul>
+          <Category />
         </div>
         <div className="flex-grow px-8">
-          <div className="mb-7">
+          <div className="mb-2">
             <button
               ref={sortByFiled}
               onClick={() => {
@@ -98,8 +78,8 @@ const NewItems = () => {
           </div>
           <div>
             <div className="grid grid-rows-1 py-3 gap-y-4 grid-cols-5">
-              {[1, 2, 3, 4, 5].map(() => (
-                <BookBlock />
+              {items.map((value) => (
+                <BookBlock value={value} key={value.bookId} />
               ))}
             </div>
           </div>

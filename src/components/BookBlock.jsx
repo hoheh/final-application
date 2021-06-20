@@ -19,7 +19,7 @@ const BookBlock = React.memo(({ value }) => {
             {value.bookName}
           </p>
           <p className="text-gray-400 text-md mb-1 truncate w-11/12 tracking-wide">
-            {value.author && value.author["authorName"]}
+            {value.authorName}
           </p>
           <div className="flex items-center">
             <button
