@@ -9,7 +9,7 @@ import App from "./App";
 
 import firebase from "firebase";
 
-import "./index.css";
+import "./index.scss";
 
 firebase.initializeApp({
   apiKey: "AIzaSyDinvbHTuvRjYzhEccsl5mZ7RDqXkKPXR0",

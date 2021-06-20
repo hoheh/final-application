@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 
 import { BookBlock } from "../components";
 
@@ -7,6 +8,23 @@ import { arrow } from "../assets/images/main";
 const NewItems = () => {
   const sortByFiled = React.useRef(null);
   const [visibilityPopup, setVisibilityPopup] = React.useState(false);
+  const [items, setItems] = React.useState([]);
+  const refs = firebase.firestore().collection("Book").where("category");
+
+  const getItems = () => {
+    refs.onSnapshot((qSnap) => {
+      const items = [];
+      qSnap.forEach((item) => {
+        items.push(item.data());
+      });
+      setItems(items);
+      console.log(items);
+    });
+  };
+
+  React.useEffect(() => {
+    getItems();
+  }, []);
 
   const categoriesToChoose = [
     "Сначала новые",
