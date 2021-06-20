@@ -2,7 +2,7 @@ import React from "react";
 
 import clsx from "clsx";
 
-const InputField = ({ classname, label, nameId, placeholder, formik, type }) => {
+const InputField = ({ label, nameId, placeholder, formik, type }) => {
   return (
     <div>
       <label htmlFor={nameId}>

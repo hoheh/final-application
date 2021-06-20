@@ -1,4 +1,4 @@
-export { default as Main } from "./Main";
+export { default as Main } from "./MainPage";
 export { default as Auth } from "./Auth";
 export { default as Register } from "./Register";
 export { default as Book } from "./Book";

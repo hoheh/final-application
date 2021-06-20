@@ -27,10 +27,10 @@ const Register = () => {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((data) => {
           history.push("/");
-          console.log(data);
+          alert(data);
         })
         .catch((err) => {
-          console.log(err.message);
+          alert(err.message);
         });
     },
   });

@@ -9,25 +9,13 @@ import { Context } from "../index";
 
 import { krest } from "../assets/images/main";
 
-// TODO (1) сделать бд в firebases
-
-// TODO (2) отображение авы (google ава/ава из первых букв имени-фамилии c каким нибудь цветом на беке)
-
-// TODO (3) роутинг по коллекциям
-
-// TODO (4) получение данных из бд
-
-// TODO (5) переход на страницу книги
-
-// TODO (6) переход на страницу корзины
-
 const Auth = () => {
   const history = useHistory();
   const { auth, firebase } = React.useContext(Context);
 
   const authGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const user = await auth.signInWithPopup(provider);
+    const { user } = await auth.signInWithPopup(provider);
     console.log(user);
   };
 
@@ -38,9 +26,12 @@ const Auth = () => {
     },
     validate: validateAuth,
     onSubmit: (values) => {
-      auth.signInWithEmailAndPassword(values.email, values.password).then(() => {
-        history.push("/");
-      });
+      auth
+        .signInWithEmailAndPassword(values.email, values.password)
+        .then(({ user }) => {
+          history.push("/");
+          console.log(user);
+        });
     },
   });
 

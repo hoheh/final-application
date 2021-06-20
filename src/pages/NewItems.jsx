@@ -80,7 +80,7 @@ const NewItems = () => {
           </div>
           <div>
             <div className="grid grid-rows-1 py-3 gap-y-4 grid-cols-5">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => (
+              {[1, 2, 3, 4, 5].map(() => (
                 <BookBlock />
               ))}
             </div>

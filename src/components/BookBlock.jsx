@@ -1,26 +1,35 @@
 import React from "react";
+import clsx from "clsx";
 
-import { bookImage, bookMarkOrange, bookMarkBlack } from "../assets/images/main";
+import { bookMarkOrange, bookMarkBlack, bookImage } from "../assets/images/main";
 
-const BookBlock = () => {
+const BookBlock = React.memo(({ value }) => {
+  // TODO переделать с помощью redux
+  const [addToCart, setAddToCart] = React.useState(false);
   const [bookMarkChoose, setBookMarkChoose] = React.useState(false);
+
   return (
-    <div className="w-full h-140 flex items-center justify-center bg-transparent">
+    <div className="w-full h-140 cursor-pointer flex items-center justify-center bg-transparent">
       <div className="my-auto space-y-3">
         <div className="w-10/12 mx-auto">
           <img src={bookImage} alt="Book image" />
         </div>
         <section className="mx-6">
-          <p className="text-xl text-left font-medium">681 руб.</p>
-          <p className="tracking-wide font-light mb-0.5 text-lg">
-            Мара и Морок. 500 лет назад
+          <p className="text-xl text-left font-medium">{value.bookPrice} руб.</p>
+          <p className="tracking-wide h-12 break-words overflow-ellipsis overflow-hidden font-light mb-0.5">
+            {value.bookName}
           </p>
-          <p className="text-gray-400 mb-3 tracking-wide">Лия арден</p>
+          <p className="text-gray-400 text-md mb-1 truncate w-11/12 tracking-wide">
+            {value.author.name}
+          </p>
           <div className="flex items-center">
             <button
-              className="focus:outline-none w-4/5 p-2.5 border rounded-lg
-                tracking-wider border-gray-300">
-              В корзину
+              onClick={() => setAddToCart(!addToCart)}
+              className={clsx(
+                "focus:outline-none w-4/5 p-2.5 border rounded-lg tracking-wider",
+                addToCart ? "bg-dirty-green text-white" : "border-gray-300",
+              )}>
+              {addToCart ? "Добавлено" : "В корзину"}
             </button>
             <div
               onClick={() => setBookMarkChoose(!bookMarkChoose)}
@@ -44,6 +53,6 @@ const BookBlock = () => {
       </div>
     </div>
   );
-};
+});
 
 export default BookBlock;

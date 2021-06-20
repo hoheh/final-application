@@ -1,33 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Context } from "../index";
 
+import { routesHeader } from "../pages/routes";
 import { logo, search, menu, arrow } from "../assets/images/main";
 
 function Header() {
-  const [isAuth, setIsAuth] = React.useState(true);
+  const myProfile = React.useRef(null);
+  const [popup, setPopup] = React.useState(false);
   const [cartItem, setCartItem] = React.useState(0);
-  const items = [
-    {
-      name: "Новинки",
-      path: "/newItems",
-    },
-    {
-      name: "Бестселлеры",
-      path: "/bestsellers",
-    },
-    {
-      name: "Лучшие цены",
-      path: "/bestPrice",
-    },
-    {
-      name: "Рекомендации",
-      path: "/rec",
-    },
-    {
-      name: "Авторы",
-      path: "/authors",
-    },
-  ];
+  const { auth } = React.useContext(Context);
+  const [isAuth] = useAuthState(auth);
+
+  const handleClick = (event) => {
+    if (
+      myProfile.current &&
+      !event.path.includes(myProfile.current || myProfile.current.children)
+    ) {
+      setPopup(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <header className="border-b-2 py-2 px-20">
@@ -54,7 +54,7 @@ function Header() {
           </div>
         </div>
         <div className="flex p-3 w-72 justify-around items-center">
-          {isAuth ? (
+          {!isAuth ? (
             <div className="flex items-center space-x-1">
               <Link to="/auth">
                 <p className="text-lg font-medium text-link">Вход</p>
@@ -65,17 +65,37 @@ function Header() {
               </Link>
             </div>
           ) : (
-            <div>
-              <p className="cursor-pointer flex items-center font-medium text-lg text-gray-500">
+            <div ref={myProfile}>
+              <p
+                onClick={() => setPopup(!popup)}
+                className="cursor-pointer flex items-center font-medium text-lg text-gray-500">
                 Мой профиль
                 <span className="ml-1">
-                  <img
-                    className="w-4 h-2 relative top-0.5"
-                    src={arrow}
-                    alt="Arrow down"
-                  />
+                  <img className="w-4 h-2" src={arrow} alt="Arrow down" />
                 </span>
               </p>
+              {popup && (
+                <div className="bg-white absolute border mt-0.5 shadow-md">
+                  <ul>
+                    <li
+                      className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
+                      cursor-pointer">
+                      Личный кабинет
+                    </li>
+                    <li
+                      className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
+                      cursor-pointer">
+                      История заказов
+                    </li>
+                    <li
+                      onClick={() => auth.signOut()}
+                      className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
+                      cursor-pointer">
+                      Выйти
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           )}
           <Link to="/cart">
@@ -102,7 +122,7 @@ function Header() {
               {cartItem > 0 && (
                 <div
                   className="absolute border-2 border-white box-border
-							w-7 h-7 top-6 right-16 bg-hover-dirty-green rounded-full">
+							w-7 h-7 top-6 bg-hover-dirty-green rounded-full">
                   <p className="text-sm w-full h-full text-center relative top-0.5 text-gray-50">
                     {cartItem}
                   </p>
@@ -118,11 +138,10 @@ function Header() {
           <img className="w-6 ml-4" src={menu} alt="Menu icon" />
         </div>
         <ul className="flex ml-4 space-x-4">
-          {items &&
-            items.map(({ name, path }, idx) => (
-              <Link to={path}>
+          {routesHeader &&
+            routesHeader.map(({ name, path }, idx) => (
+              <Link to={path} key={idx}>
                 <li
-                  key={idx}
                   className="text-xl px-5 text-gray-600 transition ease-in duration-200 opacity-80
 							hover:opacity-100 tracking-wide cursor-pointer pt-3 pb-2">
                   {name}
