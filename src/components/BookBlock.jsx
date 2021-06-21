@@ -2,9 +2,12 @@ import React from "react";
 import clsx from "clsx";
 
 import { useDispatch } from "react-redux";
-import { bookMarkOrange, bookMarkBlack } from "../assets/images/main";
-import { addNewItemFetch, fetchSelectedBook } from "../redux/actions/cart";
 import { useHistory } from "react-router-dom";
+
+import { addNewItemFetch, fetchSelectedBook } from "../redux/actions/cart";
+import { addNewBookMark } from "../redux/actions/bookMark";
+
+import { bookMarkOrange, bookMarkBlack } from "../assets/images/main";
 
 const BookBlock = React.memo(({ value }) => {
   const [addToCart, setAddToCart] = React.useState(false);
@@ -37,7 +40,12 @@ const BookBlock = React.memo(({ value }) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(addNewItemFetch(value));
+                dispatch(
+                  addNewItemFetch({
+                    item: value,
+                    count: 1,
+                  }),
+                );
                 setAddToCart(!addToCart);
               }}
               className={clsx(
@@ -47,7 +55,11 @@ const BookBlock = React.memo(({ value }) => {
               {addToCart ? "Добавлено" : "В корзину"}
             </button>
             <div
-              onClick={() => setBookMarkChoose(!bookMarkChoose)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setBookMarkChoose(!bookMarkChoose);
+                dispatch(addNewBookMark(value));
+              }}
               className="w-8 h-8 flex-1 cursor-pointer">
               {!bookMarkChoose ? (
                 <img

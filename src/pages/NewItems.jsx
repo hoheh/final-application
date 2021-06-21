@@ -1,12 +1,13 @@
 import React from "react";
 import firebase from "firebase";
 
-import { BookBlock, Category } from "../components";
+import { BookBlock, Category, Skeleton } from "../components";
 
 import { arrow } from "../assets/images/main";
 
 const NewItems = () => {
   const sortByFiled = React.useRef(null);
+  const [state, setState] = React.useState(false);
   const [visibilityPopup, setVisibilityPopup] = React.useState(false);
   const [items, setItems] = React.useState([]);
   const refs = firebase
@@ -15,11 +16,13 @@ const NewItems = () => {
     .where("categoryName", "==", "Новинки");
 
   const getItems = () => {
+    setState(true);
     refs.onSnapshot((qSnap) => {
       const items = [];
       qSnap.forEach((item) => {
         items.push(item.data());
       });
+      setState(false);
       setItems(items);
     });
   };
@@ -28,12 +31,8 @@ const NewItems = () => {
     getItems();
   }, []);
 
-  const categoriesToChoose = [
-    "Сначала новые",
-    "Сначала дешевые",
-    "Сначала дорогие",
-    "Сначала популярные",
-  ];
+  const categoriesToChoose = ["Сначала дешевые", "Сначала дорогие"];
+
   return (
     <div className="px-20 py-8">
       <div>
@@ -78,9 +77,13 @@ const NewItems = () => {
           </div>
           <div>
             <div className="grid grid-rows-1 py-3 gap-y-4 grid-cols-5">
-              {items.map((value) => (
-                <BookBlock value={value} key={value.bookId} />
-              ))}
+              {state
+                ? Array(5)
+                    .fill(0)
+                    .map(() => <Skeleton />)
+                : items.map((value) => (
+                    <BookBlock value={value} key={value.bookId} />
+                  ))}
             </div>
           </div>
         </div>

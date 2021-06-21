@@ -1,12 +1,13 @@
 import React from "react";
 import firebase from "firebase";
 
-import { BookBlock, Category } from "../components";
+import { BookBlock, Category, Skeleton } from "../components";
 
 import { arrow } from "../assets/images/main";
 
 const Bestsellers = () => {
   const sortByFiled = React.useRef(null);
+  const [state, setState] = React.useState(false);
   const [visibilityPopup, setVisibilityPopup] = React.useState(false);
   const [items, setItems] = React.useState([]);
   const refs = firebase
@@ -15,11 +16,13 @@ const Bestsellers = () => {
     .where("categoryName", "==", "Бестселлеры");
 
   const getItems = () => {
+    setState(true);
     refs.onSnapshot((qSnap) => {
       const items = [];
       qSnap.forEach((item) => {
         items.push(item.data());
       });
+      setState(false);
       setItems(items);
     });
   };
@@ -28,12 +31,8 @@ const Bestsellers = () => {
     getItems();
   }, []);
 
-  const categoriesToChoose = [
-    "Сначала новые",
-    "Сначала дешевые",
-    "Сначала дорогие",
-    "Сначала популярные",
-  ];
+  const categoriesToChoose = ["Сначала дешевые", "Сначала дорогие"];
+
   return (
     <div className="px-20 py-8">
       <div>
@@ -54,7 +53,7 @@ const Bestsellers = () => {
                 setVisibilityPopup(!visibilityPopup);
               }}
               className="border border-gray-300 w-80 flex items-center opacity-90 justify-between
-          focus:outline-none rounded-lg px-5 p-2">
+            focus:outline-none rounded-lg px-5 p-2">
               <span className="tracking-wider mr-4">Сначала популярные</span>
               <span className="w-4 font-medium">
                 <img src={arrow} alt="Down arrow" />
@@ -68,7 +67,7 @@ const Bestsellers = () => {
                       <li
                         key={idx}
                         className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
-                      cursor-pointer">
+                        cursor-pointer">
                         {value}
                       </li>
                     ))}
@@ -78,9 +77,13 @@ const Bestsellers = () => {
           </div>
           <div>
             <div className="grid grid-rows-1 py-3 gap-y-4 grid-cols-5">
-              {items.map((value) => (
-                <BookBlock value={value} key={value.bookId} />
-              ))}
+              {state
+                ? Array(5)
+                    .fill(0)
+                    .map(() => <Skeleton />)
+                : items.map((value) => (
+                    <BookBlock value={value} key={value.bookId} />
+                  ))}
             </div>
           </div>
         </div>

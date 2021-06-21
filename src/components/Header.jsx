@@ -85,11 +85,6 @@ function Header() {
                     <li
                       className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
                       cursor-pointer">
-                      Личный кабинет
-                    </li>
-                    <li
-                      className="py-3 px-5 hover:bg-hover-dirty-green-50 text-gray-600
-                      cursor-pointer">
                       История заказов
                     </li>
                     <li

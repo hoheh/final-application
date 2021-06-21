@@ -8,3 +8,4 @@ export { default as Bestsellers } from "./Bestsellers";
 export { default as BestPrice } from "./BestPrice";
 export { default as Recommendation } from "./Recommendation";
 export { default as Authors } from "./Authors";
+export { default as Pay } from "./Pay";

@@ -9,6 +9,7 @@ import {
   Recommendation,
   Authors,
   Book,
+  Pay,
 } from "./pages";
 import { Header, Footer, HomeRoute } from "./components";
 
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/authors" component={Authors} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/book/:id" component={Book} />
+          <Route exact path="/pay" component={Pay} />
         </Switch>
       </main>
       <Footer />

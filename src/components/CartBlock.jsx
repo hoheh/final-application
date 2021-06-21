@@ -1,8 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { trash } from "../assets/images/main";
 import { bookMarkBlack } from "../assets/images/main";
+import { removeSelectedItem } from "../redux/actions/cart";
 
 const CartBlock = ({ item }) => {
+  const dispatch = useDispatch();
+  let [countBook, setCountBook] = React.useState(1);
+
   return (
     <div className="h-64 w-full">
       <div className="flex py-5 px-10 shadow-lg h-full border border-border-cart">
@@ -12,7 +17,7 @@ const CartBlock = ({ item }) => {
         <div className="pl-10 py-8 w-full flex justify-between">
           <div className="flex flex-col">
             <div className="space-y-1">
-              <p className="font-medium text-2xl">{item.bookName}</p>
+              <p className="font-medium w-9/12 text-2xl">{item.bookName}</p>
               <p className="text-base font-thin text-border-cart">
                 {item.authorName}
               </p>
@@ -32,32 +37,56 @@ const CartBlock = ({ item }) => {
             </div>
           </div>
           <div className="py-1">
-            <div className="flex space-x-20 items-center">
+            <div className="flex space-x-10 items-center">
               <div className="grid w-32 rounded-md border border-gray-300 h-full grid-cols-3 grid-rows-1">
                 <div className="w-full">
-                  <button className="w-full focus:outline-none text-2xl opacity-60 border-r border-gray-300">
+                  <button
+                    onClick={() => {
+                      if (countBook !== 1) {
+                        setCountBook(--countBook);
+                      }
+                    }}
+                    className="w-full focus:outline-none text-2xl opacity-60 border-r border-gray-300">
                     &#8722;
                   </button>
                 </div>
                 <div className="h-full w-full">
                   <input
+                    value={countBook}
+                    onChange={(e) => {
+                      if (e.target.value === 0) {
+                        setCountBook(1);
+                      } else {
+                        setCountBook(e.target.value);
+                      }
+                    }}
                     className="w-full h-full text-center focus:outline-none border-r border-gray-300"
                     type="text"
                   />
                 </div>
                 <div className="w-full">
-                  <button className="w-full focus:outline-none text-2xl opacity-60 border-r border-gray-300">
+                  <button
+                    onClick={() => {
+                      setCountBook(++countBook);
+                    }}
+                    className="w-full focus:outline-none text-2xl opacity-60 border-r border-gray-300">
                     &#43;
                   </button>
                 </div>
               </div>
               <div>
-                <p className="text-2xl font-medium">{item.bookPrice} руб.</p>
+                <p className="text-2xl font-medium">
+                  {item.bookPrice * countBook} руб.
+                </p>
               </div>
             </div>
             <div className="flex mt-20 justify-end space-x-6">
-              <div className=" ">
-                <button className="pb-0.5 focus:outline-none text-black font-light opacity-60 hover:opacity-100 flex items-center space-x-2">
+              <div className="">
+                <button
+                  onClick={() => {
+                    dispatch(removeSelectedItem(item));
+                  }}
+                  className="pb-0.5 focus:outline-none text-black font-light opacity-60 hover:opacity-100 flex items-center space-x-2">
                   <img className="w-4 h-4" src={trash} alt="" />
                   <span>Удалить</span>
                 </button>

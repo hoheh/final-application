@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeAllItem } from "../redux/actions/cart";
 
 import { trash } from "../assets/images/main";
 import { CartBlock } from "../components/index";
@@ -8,8 +9,11 @@ import { CartBlock } from "../components/index";
 const Cart = () => {
   const history = useHistory();
 
-  const { items } = useSelector(({ cart }) => cart);
-
+  const dispatch = useDispatch();
+  const { items, weight, count, price } = useSelector(({ cart }) => cart);
+  const convertWeight = () => {
+    return weight.toFixed(2);
+  };
   return (
     <div className="px-20 py-8">
       <div className="w-full border-b border-gray-300">
@@ -28,7 +32,11 @@ const Cart = () => {
         <div className="mt-4 flex justify-between">
           <div className="w-9/12 mb-10 space-y-4">
             <div className="flex flex-row-reverse mt-3">
-              <button className="pb-0.5 focus:outline-none text-black font-light opacity-60 hover:opacity-100 flex items-center space-x-2">
+              <button
+                onClick={() => {
+                  dispatch(removeAllItem());
+                }}
+                className="pb-0.5 focus:outline-none text-black font-light opacity-60 hover:opacity-100 flex items-center space-x-2">
                 <img className="w-4 h-4" src={trash} alt="" />
                 <span>Удалить все</span>
               </button>
@@ -38,7 +46,39 @@ const Cart = () => {
             ))}
           </div>
           <div className="mt-14 shadow-lg h-96">
-            <div className="w-96 h-full border border-border-cart"></div>
+            <div className="w-96 h-full border border-border-cart">
+              <ul>
+                <li className="border-b border-border-cart py-4 flex justify-between font-thin px-5">
+                  <span>Товаров в заказе</span>
+                  <span>{count}</span>
+                </li>
+                <li className="border-b border-border-cart py-4 flex justify-between font-thin px-5">
+                  <span>Вес заказа</span>
+                  <span>{convertWeight()} кг.</span>
+                </li>
+                <li className="border-b border-border-cart py-4 flex justify-between font-thin px-5">
+                  <span>Сумма заказа</span>
+                  <span>{price} руб.</span>
+                </li>
+                <li className="py-4 flex justify-between font-thin px-5">
+                  <span>Доставка бесплатно</span>
+                  <span>Бесплатно</span>
+                </li>
+                <li className="py-4 flex font-medium justify-between px-5">
+                  <span className="text-lg">Итого к оплате</span>
+                  <span className="text-lg">{price} руб.</span>
+                </li>
+              </ul>
+              <div className="w-full px-5 mt-5">
+                <button
+                  onClick={() => {
+                    history.push("/pay");
+                  }}
+                  className="w-full focus:outline-none bg-dirty-green py-2 px-4 text-white font-medium text-2xl">
+                  Оплатить
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
