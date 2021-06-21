@@ -1,17 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Context } from "../index";
+import { useSelector, useDispatch } from "react-redux";
 
+import { Context } from "../index";
 import { routesHeader } from "../pages/routes";
 import { logo, search, menu, arrow } from "../assets/images/main";
+
+import { fetchData } from "../redux/actions/cart";
 
 function Header() {
   const myProfile = React.useRef(null);
   const [popup, setPopup] = React.useState(false);
-  const [cartItem, setCartItem] = React.useState(0);
+
   const { auth } = React.useContext(Context);
   const [isAuth] = useAuthState(auth);
+
+  const { count } = useSelector(({ cart }) => cart);
 
   const handleClick = (event) => {
     if (
@@ -119,12 +124,12 @@ function Header() {
               0-24.8125-20.183594-45-45-45-24.8125 0-45 20.1875-45 45zm0 0"
                 />
               </svg>
-              {cartItem > 0 && (
+              {count > 0 && (
                 <div
                   className="absolute border-2 border-white box-border
 							w-7 h-7 top-6 bg-hover-dirty-green rounded-full">
                   <p className="text-sm w-full h-full text-center relative top-0.5 text-gray-50">
-                    {cartItem}
+                    {count}
                   </p>
                 </div>
               )}

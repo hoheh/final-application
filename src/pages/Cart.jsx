@@ -1,11 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { trash } from "../assets/images/main";
+import { CartBlock } from "../components/index";
 
 const Cart = () => {
-  const product = [];
   const history = useHistory();
+
+  const { items } = useSelector(({ cart }) => cart);
 
   return (
     <div className="px-20 py-8">
@@ -21,8 +24,23 @@ const Cart = () => {
           </button>
         </div>
       </div>
-      {product.length > 0 ? (
-        <div></div>
+      {items.length > 0 ? (
+        <div className="mt-4 flex justify-between">
+          <div className="w-9/12 mb-10 space-y-4">
+            <div className="flex flex-row-reverse mt-3">
+              <button className="pb-0.5 focus:outline-none text-black font-light opacity-60 hover:opacity-100 flex items-center space-x-2">
+                <img className="w-4 h-4" src={trash} alt="" />
+                <span>Удалить все</span>
+              </button>
+            </div>
+            {items.map((item) => (
+              <CartBlock key={item.bookId} item={item} />
+            ))}
+          </div>
+          <div className="mt-14 shadow-lg h-96">
+            <div className="w-96 h-full border border-border-cart"></div>
+          </div>
+        </div>
       ) : (
         <div className="w-full space-y-8 py-28 h-full flex flex-col items-center justify-center">
           <div>

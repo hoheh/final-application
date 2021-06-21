@@ -7,3 +7,4 @@ export { default as Footer } from "./Footer";
 export { default as HomeRoute } from "./HomeRoute";
 export { default as BookBlock } from "./BookBlock";
 export { default as Category } from "./Category";
+export { default as CartBlock } from "./CartBlock";

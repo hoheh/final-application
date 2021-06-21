@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/rec" component={Recommendation} />
           <Route exact path="/authors" component={Authors} />
           <Route exact path="/cart" component={Cart} />
-          <Route exact path="/book" component={Book} />
+          <Route exact path="/book/:id" component={Book} />
         </Switch>
       </main>
       <Footer />

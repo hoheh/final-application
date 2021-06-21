@@ -1,17 +1,24 @@
 import React from "react";
 import firebase from "firebase";
 
-const Category = ({ genreName }) => {
-  const [items, setItems] = React.useState([]);
-  const refs = firebase.firestore().collection("Book").orderBy("genreName");
-  // TODO переписать на добавление только одного жанра
+const Category = () => {
+  const [genreName, setGenreName] = React.useState([]);
+
+  const refs = firebase.firestore().collection("Book");
+
   const getItems = () => {
     refs.onSnapshot((qSnap) => {
-      const items = [];
+      const genres = [];
       qSnap.forEach((item) => {
-        items.push(item.data());
+        genres.push(item.data().genreName);
       });
-      setItems(items);
+      const newItems = [];
+      genres.forEach((item) => {
+        if (!newItems.includes(item)) {
+          newItems.push(item);
+        }
+      });
+      setGenreName(newItems);
     });
   };
 
@@ -21,9 +28,11 @@ const Category = ({ genreName }) => {
 
   return (
     <ul className="space-y-3 relative left-0.5">
-      {items.map((value) => (
-        <li className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
-          {value.genreName}
+      {genreName.map((value, idx) => (
+        <li
+          key={idx}
+          className="opacity-80 leading-7 cursor-pointer hover:opacity-100 tracking-wider-more">
+          {value}
         </li>
       ))}
     </ul>

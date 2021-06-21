@@ -30,6 +30,7 @@ module.exports = {
         "hover-dirty-green-50": "rgba(62, 184, 169, 0.07)",
         "gray-10": "#f7f7f7",
         "blue-dirty": "#3D70B2",
+        "border-cart": "#ACACAC",
       },
       fontSize: {
         "pre-xl": ["1.12rem", "1.75rem"],

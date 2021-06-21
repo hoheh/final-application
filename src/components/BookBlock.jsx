@@ -1,14 +1,26 @@
 import React from "react";
 import clsx from "clsx";
 
+import { useDispatch } from "react-redux";
 import { bookMarkOrange, bookMarkBlack } from "../assets/images/main";
+import { addNewItemFetch, fetchSelectedBook } from "../redux/actions/cart";
+import { useHistory } from "react-router-dom";
 
 const BookBlock = React.memo(({ value }) => {
-  // TODO переделать с помощью redux
   const [addToCart, setAddToCart] = React.useState(false);
   const [bookMarkChoose, setBookMarkChoose] = React.useState(false);
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   return (
-    <div className="w-full h-140 cursor-pointer flex items-center justify-center bg-transparent">
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        history.push(`/book/${value.bookId}`);
+        fetchSelectedBook(value.bookId);
+      }}
+      className="w-full h-140 cursor-pointer flex items-center justify-center bg-transparent">
       <div className="w-full space-y-2">
         <div
           className="bg-contain bg-center bg-no-repeat h-82"
@@ -23,7 +35,11 @@ const BookBlock = React.memo(({ value }) => {
           </p>
           <div className="flex items-center">
             <button
-              onClick={() => setAddToCart(!addToCart)}
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(addNewItemFetch(value));
+                setAddToCart(!addToCart);
+              }}
               className={clsx(
                 "focus:outline-none w-4/5 p-2.5 border rounded-lg tracking-wider",
                 addToCart ? "bg-dirty-green text-white" : "border-gray-300",

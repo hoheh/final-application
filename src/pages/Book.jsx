@@ -1,8 +1,8 @@
 import React from "react";
 
+import moment from "moment";
+import { ru } from "moment/locale/ru";
 import {
-  secondBigImage,
-  bigBookImage,
   checkImage,
   starIcon,
   bookImage,
@@ -11,11 +11,27 @@ import {
 } from "../assets/images/main";
 
 const Book = () => {
-  const article = "8fc3986138a61";
-  const inStock = 10;
-  const sum = 821;
+  const [itemState, setItemState] = React.useState({});
   const [bookMarkChoose, setBookMarkChoose] = React.useState(false);
   const [countBook, setCountBook] = React.useState(1);
+
+  const getDate = () => {
+    const now = moment().add(7, "days");
+    moment.locale(ru);
+    return now.format("DD MMMM");
+  };
+
+  React.useEffect(() => {
+    setItemState((prev) => {
+      return {
+        ...prev,
+        ...JSON.parse(localStorage.getItem("item")),
+      };
+    });
+    return () => {
+      localStorage.removeItem("item");
+    };
+  }, []);
 
   return (
     <div className="py-10">
@@ -25,27 +41,22 @@ const Book = () => {
             <button className="w-20 focus:outline-none focus:ring-2 focus:ring-dirty-green h-20 overflow-hidden object-center">
               <img
                 className="object-cover cursor-pointer"
-                src={bigBookImage}
-                alt=""
-              />
-            </button>
-            <button className="w-20 focus:outline-none focus:ring-2 focus:ring-dirty-green h-20 overflow-hidden object-center">
-              <img
-                className="object-cover cursor-pointer"
-                src={secondBigImage}
+                src={itemState.bookPhoto}
                 alt=""
               />
             </button>
           </div>
           <div>
-            <img className="w-96" src={bigBookImage} alt="Big book image" />
+            <img className="w-96" src={itemState.bookPhoto} alt="Big book image" />
           </div>
           <div className="flex-1 px-5 py-3">
             <div>
-              <p className="text-4xl font-bold">Мара и Морок. 500 лет назад</p>
+              <p className="text-4xl font-bold">{itemState.bookName}</p>
             </div>
             <div className="mt-3 mb-4">
-              <p className="text-lg text-gray-500">Артикль: {article}</p>
+              <p className="text-lg text-gray-500">
+                Артикль: {itemState.bookArticle}
+              </p>
             </div>
             <div className="w-9/12">
               <div className="w-full space-y-3 py-6 px-7 rounded-lg bg-hover-dirty-green-50">
@@ -60,7 +71,7 @@ const Book = () => {
                 <div className="flex items-center space-x-5">
                   <div className="text-2xl font-light">
                     Цена &nbsp;
-                    <span className="text-3xl font-bold">821</span>
+                    <span className="text-3xl font-bold">{itemState.bookPrice}</span>
                     &nbsp;
                     <span className="text-2xl">р.</span>
                   </div>
@@ -90,14 +101,16 @@ const Book = () => {
                     </div>
                     <div>
                       <p className="text-gray-500 text-lg font-light tracking-wide">
-                        = {sum} р.
+                        = {itemState.bookPrice * countBook} р.
                       </p>
                     </div>
                   </div>
                   <div className="flex-1">
                     <div className="flex space-x-1.5 justify-end">
                       <img className="w-7 h-7" src={starIcon} alt="" />
-                      <span className="text-2xl text-gray-400 font-medium">5.0</span>
+                      <span className="text-2xl text-gray-400 font-medium">
+                        {itemState.bookScore}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -109,9 +122,8 @@ const Book = () => {
                   </button>
                 </div>
                 <div>
-                  {/* TODO дата курьерской доставки = число сегодня + неделя */}
                   <p className="text-pre-xl font-light text-gray-500">
-                    Курьерская доставка: 16 мая, от 282 руб.
+                    Курьерская доставка: {getDate()}, от 282 руб.
                   </p>
                 </div>
               </div>
